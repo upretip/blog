@@ -1,7 +1,6 @@
 ---
 layout: post
-title: This site is under construction
+title: 
 ---
 
-In next few weeks, this site will have more posts, projects, and information 
 
