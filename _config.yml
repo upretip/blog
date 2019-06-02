@@ -6,7 +6,7 @@
 name: Parash Upreti
 
 # Short bio or description (displayed in the header)
-description: Data Engineering, Data Science, Machine Learning
+description: Data Engineering, Data Science, Machine Learning, Business Intelligence
 
 # URL of your avatar or profile pic (you could use your GitHub profile pic)
 avatar: https://raw.githubusercontent.com/upretip/upretip.github.io/master/images/DSC_0026.jpg
@@ -23,7 +23,7 @@ footer-links:
   flickr:
   github: upretip
   instagram:
-  linkedin:
+  linkedin: parashupreti
   pinterest:
   rss: # just type anything here for a working RSS icon
   twitter: parashupreti
@@ -38,11 +38,11 @@ footer-links:
 disqus:
 
 # Enter your Google Analytics web tracking code (e.g. UA-2110908-2) to activate tracking
-google_analytics:
+google_analytics:UA-141301257-1
 
 # Your website URL (e.g. http://barryclark.github.io or http://www.barryclark.co)
 # Used for Sitemap.xml and your RSS feed
-url:
+url: https://upretip.github.io
 
 # If you're hosting your site at a Project repository on GitHub pages
 # (http://yourusername.github.io/repository-name)
