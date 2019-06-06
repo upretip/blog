@@ -46,7 +46,7 @@ So, I thought i'd write up the steps to customize the settings for future refere
 <!-- ![VScode Screenshot](https://user-images.githubusercontent.com/1487073/58344409-70473b80-7e0a-11e9-8570-b2efc6f8fa44.png) -->
 <p align="center">
   <img alt="VS Code in action" src="https://user-images.githubusercontent.com/1487073/58344409-70473b80-7e0a-11e9-8570-b2efc6f8fa44.png"
-  width = "800">
+  width = "800"/>
 
 <figcaption>Screenshot of VScode Editor. Source: vscode github</figcaption>
 </p>
