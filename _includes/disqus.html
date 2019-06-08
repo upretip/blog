@@ -1,4 +1,25 @@
-{% if site.disqus %}
+<!-- Copied from  https://desiredpersona.com/disqus-comments-jekyll/-->
+{% if page.comments != false}
+
+  <div id="disqus_thread"></div>
+  <script>
+    var disqus_config = function () {
+      this.page.url = '{{ page.url | absolute_url }}';
+      this.page.identifier = '{{ page.url | absolute_url }}';
+    };
+    (function() {
+      var d = document, s = d.createElement('script');
+      s.src = 'https://{{ site.disqus.shortname }}.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', +new Date());
+      (d.head || d.body).appendChild(s);
+    })();
+  </script>
+  <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+{% endif %}
+
+<!-- 
+	The following was default commented to use the one from above
+	{% if site.disqus %}
 <div class="comments">
 	<div id="disqus_thread"></div>
 	<script type="text/javascript">
@@ -14,4 +35,5 @@
 	</script>
 	<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
 </div>
-{% endif %}
+{% endif %} 
+-->
