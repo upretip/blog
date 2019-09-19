@@ -5,14 +5,20 @@ To be good at writing SQL queries one just needs to practice a lot. However, the
 
 Things to be careful about
 - _`syntax` errors_: spell things correctly 
+- _`appearance`_: Write sql commands in uppercase, new line if multiple columns in select statement. One line per function.
 
 Basic selection; retrun first 10
+
+SELECT  
 
 ```
 SELECT * 
 FROM sales_table
 LIMIT 10 ;
 ```
+
+
+WHERE 
 
 Filter using single criteria
 
@@ -33,7 +39,9 @@ Filtering using multiple criteria
 
 
 ```
-SELECT  sales_person_id, buyer_id, sales_unit
+SELECT  sales_person_id, 
+        buyer_id, 
+        sales_unit
 FROM sales_table
 WHERE sales_price BETWEEN 100 AND 120
 AND buyer_last_name LIKE %ik%  
@@ -49,8 +57,9 @@ FROM sales_table
 WHERE (region = "East") 
 AND (sale_price >50 OR sale_volume < 90);
 ```
+ORDER BY   
 
-Sorting 
+Sorting using order by after selecting/aggregating
 ```
 SELECT * 
 FROM sales_table
@@ -68,6 +77,7 @@ Functions include
 - AVG
 - MIN
 - MAX
+- TOTAL
 
 Counting the number of rows
 
@@ -104,10 +114,15 @@ FROM sales_table ;
 
 Perform mathematical operation between two columns
 
+Note:  
+Use CAST to get two columns in same data type. Also, in order to avoid NULL while doing operations, use COALESCE(column_name, 0) to convert NULL to zero. 
+
 ```
 SELECT (sale_price * sale_volume) as tot_rev  --as to alias the new column
 FROM sales_table ;
 ```
+
+GROUP BY  
 
 Group Summary statistics
 
@@ -117,10 +132,9 @@ SELECT SUM(sale_volume)
 FROM sales_table
 GROUP BY region;
 ```
+HAVING   
 
-Filter after grouping and aggregation
-
-HAVING function removes data from the entire group
+Filter after grouping and aggregation. HAVING function removes data from the entire group
 ```
 SELECT AVG(sale_volume)/AVG(days) as sale_per_day
 FROM sales_table
@@ -140,6 +154,20 @@ Change data type using CAST
 ```
 SELECT CAST(sale_price as varchar(10))
 FROM sales_table;
+```
+
+CASE WHEN  
+
+Control flow to check whether certain conditions are met, if so follow the commands. Can use it on select or order by 
+
+```
+SELECT col_1
+CASE 
+    WHEN col_1 < 10 THEN  "Small"
+    WHEN col_1 >=10 and col_1 <50 "Medium"
+    ELSE "Large"
+END as new_col
+FROM table_1;
 ```
 
 More things to add:
@@ -243,3 +271,173 @@ _Subqueries_
 
 In SQL, subqueries are used instead of  placeholder variables. The subqueries may get very complex, so it is important to understand how SQL performs computation
 
+
+Readable SQL Queries/Subqueire:
+
+- Capitalize SQL function names (SELECT, CASE WHEN, SUM, AVG, INNER JOIN, etc.)
+- Indent columns in select statements and put each column in new line
+- Put each SQL statement in a new line
+- Use indentation to make subqueries look logically separate
+- Use understandable aliases and indexing
+
+Aliasing Subqueries
+
+```
+WITH [Alias] as [subquery]
+SELECT * from [Alias]
+```
+
+Can nest multiple named subqueries at once too
+
+```
+WITH [subquery1] AS
+    (SELECT * from Table1),
+    [subquery2] AS
+    (SELECT * from Subquery1 where ...),
+    [subquery3] AS
+    (SELECT * from Subquery2 Where ....)
+```
+
+Creating permanent view to use it in the future
+
+```
+CREATE VIEW dbname.viewname AS
+    SELECT [columns] from dbname.table;
+```
+Drop the view similar to drop table
+
+```
+DROP VIEW dbname.viewname
+```
+
+UNION, INTERSECT and EXCEPT
+
+
+To perform these operation, the two resulting columns must be of compatible data type and have same number of columns. Compatible data type example (float and int) but not (text and int)
+
+```
+SELECT * FROM table.A
+UNION
+SELECT * FROM table.B
+
+SELECT * FROM table.A
+INTERSECT
+SELECT * FROM table.B
+
+SELECT * FROM table.A
+EXCEPT
+SELECT * FROM table.B
+
+
+```
+SQLITE SCHEMA
+
+SCHEMA of a table
+
+```
+PRAGMA TABLE_INFO(table_name)
+```
+
+```
+SELECT
+    name,
+    type
+FROM sqlite_master
+WHERE type IN ("table","view");
+```
+
+Create Database/ Drop database
+
+```
+CREATE DATABASE [dbname] OWNER [username]
+DROP DATABASE [dbname]
+```
+
+INDEX
+
+- When there are two possible indexes available, SQLite tries to estimate which index will result in better performance. However, SQLite is not good estimating and will often end up picking an index at random.
+- Use a multi-column index when data satisfying multiple conditions, in multiple columns, is to be retrieved.
+- When creating a multi-column index, the first column in the parentheses becomes the primary key for the index.
+- A covering index contains all the information necessary to answer a query.
+- Covering indexes don't apply just to multi-column indexes.
+
+
+```
+CREATE INDEX  IF NOT EXISTS [index_name] on [table_name](column_name)
+CREATE INDEX IF NOT EXISTS [multi_index_name] on [table_name](column1, column2)
+```
+
+Explain query plan
+
+```
+EXPLAIN QUERY PLAN SELECT * FROM [table_name]
+```
+before and after indexing a column
+
+
+
+# SQLite Normalization Create and modify database
+
+Start the command line with sqlite3 command and dbname as argument. Use ";" to end query
+
+sqlite has some dot commands that can be used to turn on and off some features eg `.headers on`, `.mode column`, `.help`, `.tables` `.shell [command 'ls' ,etc.]`, `.quit `
+
+```
+$> sqlite3 chinook.db
+$> .headers on
+$> .mode column
+$> select * fom student;
+$> .shell clear
+```
+
+- create new table   
+`CREATE TABLE [table_name] ([col1] [coltype], [col2] [coltype],...);`
+
+- create table with primary, foreign key  
+`CREATE TABLE [table_name] ([col1][coltype], [col2][coltype],...,PRIMARY KEY (colx, coly), FOREIGN KEY [colm] REFERENCES [another table]([another column]));`
+
+- inserting values   
+`INSERT INTO [table_name]{(columns)} VALUES (value1, value2, ...) `  
+
+- Delete rows of data   
+`DELETE FROM [table_name] {WHERE [expression]}`
+
+- Adding columns to existing table  
+`ALTER TABLE [table_name] ADD COlUMN [column1] [coltype], [column2][coltype],...;`
+
+- Changing values in a table  
+`UPDATE [table_name] SET [column_name] = [value] {WHERE [expression]}`
+
+
+# PostgreSQL in command line
+
+Things to know. Default port 5432, Default user 'postgres'. Don't forget `;` to execute query
+
+Installation:  
+- [Download and install](http://www.bigsql.org/postgresql/installers.jsp) 
+
+POSTGRES special commands start with backslash `\`
+Run on console
+```
+>$ psql -U postgres  --start psql with default user
+>$ \l
+>$ \dt
+>$ \du
+>$ \dp
+>$ \q --quit console
+```
+
+Create roles etc. Use comma ',' for multiple permissions.
+Later create groups add user to group etc. 
+
+```
+CREATE ROLE [username] WITH [options {SUPERUSER CREATEDB LOGIN PASSWORD 'password'}]
+GRANT [PERMISSION {ALL PRiVILEGES SELECT INSERT UPDATE DELETE }] ON [tablename] TO [username]
+```
+
+Revoke permissions
+
+```
+REVOKE [PERMISSION {SELECT UPDATE INSERT DELETE}] on [tablename] FROM  [username]
+REVOKE ALL PRIVILEGES on [table] from [username]
+```
