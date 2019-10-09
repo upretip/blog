@@ -58,7 +58,7 @@ permalink: /:title/
 
 # parash adding this line on oct 8, 2019 to create blog on a separate tab
 
-paginate_path:"blog/page:num/"
+paginate_path: "blog/page:num/"
 
 # The release of Jekyll Now that you're using
 version: v1.2.0
