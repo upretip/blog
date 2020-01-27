@@ -26,7 +26,7 @@ While I do not rely on one tool, software, or language, I find myself using the 
 
 Some of my current and past employers are:
 <tr>
-<td><img src = "https://www.ucsc-extension.edu/sites/default/files/main-logo.png" style="width: 250px;"/></td>  
+<td><img src = "https://www.ucsc-extension.edu/static/images/ucsc-extension-logo-with-tagline.png" style="width: 250px;"/></td>  
 
 <td><img src = "https://brand.ucla.edu/images/logos-and-marks/campus-logo.jpg" style="width: 250px;"/></td>
 
